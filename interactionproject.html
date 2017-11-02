@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>p5js Template</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.3/p5.js"></script>
+    
+    <script>
+        var c1
+        var c2
+        var c3
+        var color
+        var scale
+        var c4
+        var c5
+        var c6
+        var rectr
+        var rectr2
+        function setup() {
+            createCanvas(800,600);
+            c1=random(255)
+            c2=random(255)
+            c3=random(255)
+            c4=random(255)
+            c5=random(255)
+            c6=random(255)
+            scale=1
+            circler1=100
+            circler2=100
+        
+        }
+
+        function draw() {
+            fill("white")//color for the text
+            textSize(30)//size for the text
+            background(c4,c5,c6)//background color
+            text("Avoid the evil circle and ",150,100)//text
+            text("try to get as big as possible",175,125)//text
+            text("There is a message somewhere in the pumpkin!",100,50)//text
+            fill("purple")//color for the evil circle
+            ellipse(circler1-circler2+width-mouseX,circler1-circler2+height-mouseY,30,30)//the evil circle
+            fill(c1,c2,c3)//pumpkin and stem color
+            rect(mouseX-scale*10,mouseY-scale*90,scale*20,scale*40) //stem of hte pumpkin
+            ellipse(mouseX,mouseY,150*scale,130*scale) //pumpkin body
+            fill("Yellow") //color for the pumpkin's eye
+            triangle(mouseX-scale*50,mouseY+scale*10,mouseX-scale*10,mouseY+scale*10,mouseX-scale*25,mouseY-scale*20) //eye of the pumpkin
+            triangle(mouseX+scale*15,mouseY+scale*10,mouseX+scale*55,mouseY+scale*10,mouseX+scale*40,mouseY-scale*20) //eye of the pumpkin
+            fill("Black")//color for message
+            textSize(3*scale)//text size for the message
+            text("Hi!",mouseX-scale*40,mouseY+scale*5)//the message
+            fill("Yellow")//color of teeths
+            triangle(mouseX-scale*35,mouseY+scale*20,mouseX-scale*25,mouseY+scale*50,mouseX-scale*15,mouseY+scale*20) //teeth of the pumpkin
+            triangle(mouseX-scale*15,mouseY+scale*20,mouseX-scale*5,mouseY+scale*50,mouseX+scale*5,mouseY+scale*20)  //teeth of the pumpkin
+            triangle(mouseX+scale*5,mouseY+scale*20,mouseX+scale*15,mouseY+scale*50,mouseX+scale*25,mouseY+scale*20) //teeth of the pumpkin
+            
+        }
+        function mouseMoved(){
+            random(circler1++)//randomly increase the size of rect
+            random(circler2++)//randomly increase the are of the 
+            c1=random(255)//when the mouse moves, the color for c1(pumpkin) is changing randomly
+            c2=random(255)//when the mouse moves, the color for c2(pumpkin) is changing randomly
+            c3=random(255)//when the mouse moves, the color for c3(pumpkin) is changing randomly
+        }
+        function keyPressed(){
+            scale=scale*1.03//increase the size of the pumpkin and the message by 103%
+            c4=random(255)//when a button is pressed, the color for c4(background) is changing randomly
+            c5=random(255)//when a button is pressed, the color for c5(background) is changing randomly
+            c6=random(255)//when a button is pressed, the color for c6(background) is changing randomly
+            
+            
+            
+        }
+        
+    </script>
+</head>
+
+<body>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/Tonyl3260/p5js/blob/gh-pages/interactionproject.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
+
+</html>
