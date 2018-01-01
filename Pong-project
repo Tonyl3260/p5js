@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Pong</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.13/p5.js"></script>
+    <script>
+        // global variables
+        var ballX; //the x-location of the ball
+        var ballY; // y-location of the ball
+        var ballSpeedX = 0; // speed of the ball horizontally
+        var ballSpeedY = 0; // speed of the ball vertically
+        var paddleHeight = 30; // height of the paddle
+        var speed = 1.25; // speed of the ball
+        var paddleSize = 200; // length of the paddle
+        var Padmove; //movement of the paddle
+        var x; //x-location of the rectangle(buff)
+        var y; //y-location of the rectangle(buff)
+        var size; //size of the ball
+
+        function setup() {
+            createCanvas(800, 600); //canvas size
+            noCursor(); //hides the cursor
+            ballX = random(width); //starts the ball on a random x-location
+            ballY = random(height / 2); //starts the ball on a random y-location above half the screen
+            x = random(width - 50); //starts the buff at a random x-location that is subtracted by 50
+            y = random(height / 2 - 50);  //starts the buff at a random y-location that is subtracted by 50
+            size = 20; //set the size of the ball 
+        }
+
+        function draw() {
+            background(0, 120, 200); //set the color of the background
+            drawPaddle(); //redraw paddle
+            drawBall(); //redraw ball
+            moveBall(); //ball x and y movements 
+            checkCollide(); //checks for ball collision
+            score(); //check score
+            fill(200, 0, 0) //set color for rectangle(buff)
+            rect(x, y, 50, 50) //draw rectangle(buff)
+            fill("black") //set color for text
+            textSize(20) //set text font
+            text("Buff", x + 6, y + 30) //create text with x and y location
+        }
+
+        function score() {
+            if (size > 40) { //i size is greater than 40(ball touches buff 5 times)
+                fill("red") //set text color
+                textSize(50) //set text font
+                text("You Win!", width / 2 - 150, height / 2); //create win text with x and y location
+                noLoop(); //stop all code and end the game
+            }
+
+        }
+
+        function mousePressed() {
+            if (ballSpeedX == 0) { //if speed of ball horizontally is equal to 0
+                ballSpeedX = 5 //set speed of ball horizontally to 5
+                ballSpeedY = 5 //set speed of ball vertically to 5
+
+            }
+        }
+
+        function moveBall() {
+            ballX = ballX + ballSpeedX; //updates ball location horizontally
+            ballY = ballY + ballSpeedY; // updates ball location vertically
+        
+            console.log("ballSpeedX: " + ballSpeedX + // monitor speed/direction of ball
+                ", ballSpeedY: " + ballSpeedY);
+        }
+
+        function checkCollide() { 
+            if (ballX < 0 || ballX > width) { //check collision with left/right edges
+                ballSpeedX = ballSpeedX * -1; //reverse the speed of the ball horizontally
+            }
+            if (ballY < 0) { //check collision with top edge
+                ballSpeedY = ballSpeedY * -1; //reverse the speed of the ball vertically
+            }
+            if (ballX > x && ballX <= x + 50 && ballY > y && ballY <= y + 50) { //check collision with the buff
+                size += 5 //increase size
+                paddleSize += 20 //increase paddle size 
+                x = random(x) //change x-location of buff randomly
+                y = random(y) //change y-location of buff randomly
+                speed -= .05 //change the speed of the ball
+            }
+            //check collision with paddle
+            if (ballY > height - paddleHeight - 10) { // if ball past 'goal line' vertically
+                if (ballX > Padmove - 100 && ballX < Padmove + 100) {  // if ball is within paddle horizontally
+                    ballSpeedY = ballSpeedY * -1 * speed; //reverse the speed of the ball vertically 
+                    ballSpeedX = ballSpeedX * 1 * speed; // reverse the speed of the ball horizontally
+                    paddleSize -= 10;
+                }
+                else { //if ball is on the left or right side of the paddle
+                    fill("red") //set text color 
+                    textSize(50) //set text font
+                    text("GAME OVER!", width / 2 - 120, height / 2); //create text with x and y location
+                    noLoop(); //stop all code and end the game
+                }
+            }
+        }
+
+        function drawBall() {
+            noStroke(); //remove outline of ball
+            ellipse(ballX, ballY, size, size); //draw the ball
+        }
+
+        function drawPaddle() {
+            strokeWeight(4); //thickness for the outline of the paddle
+            Padmove = mouseX //set mouseX to Padmove
+            rect(Padmove - 100, height - paddleHeight - 4, paddleSize, paddleHeight);//movement of the paddle and set paddle at the bottom
+        }
+
+        function keyPressed() {
+            if (key === "p" || key === "P") { //if key p is pressed
+                ballSpeedX = 0 //speed of ball horizintally is set 0
+                ballSpeedY = 0 //speed of ball vertically is set o
+            }
+        }
+    </script>
+</head>
+<body>
+<form><input TYPE="button" onClick="history.go(0)" value="Reset"></form>
+    <div id="code" class="container-fluid">
+        <script src="https://gist-it.appspot.com/github/tonyl3260/p5js/blob/master/Pong-project.html?footer=0"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script>
+        $(window).bind("load", function() {
+            $('#code').before($('#defaultCanvas0').remove());
+        });
+    </script>
+</body>
